@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 
 export default function Price() {
 
     let apiKey = import.meta.env.VITE_API_URL
 
     let { symbol } = useParams()
+
+    let navigate = useNavigate()
 
     const url = `http://rest.coinapi.io/v1/exchangerate/${symbol}/USD?apikey=${apiKey}`;
 
@@ -29,7 +31,10 @@ export default function Price() {
 
     function loaded() {
         return (
-        <div>
+        <div onClick={() => {
+            alert('navigating...')
+            navigate('/')
+        }}>
             <h1>{coin.asset_id_base} / {coin.asset_id_quote}</h1>
             <h2>{coin.rate}</h2>
         </div>
