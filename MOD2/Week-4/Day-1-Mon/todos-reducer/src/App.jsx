@@ -1,26 +1,19 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useReducer } from "react";
 import TodoList from "./components/TodoList";
 
+import reducer from './reducer'
+
+// let key = import.meta.env.VITE_KEY
+
 export default function App() {
-  let [todos, setTodos] = useState([]);
+
+  let [todos, dispatch] = useReducer(reducer, []);
   let [input, setInput] = useState("");
   let [listType, setListType] = useState("all");
 
-  let key = import.meta.env.VITE_KEY
-
-  console.log(key)
-
   function addToList() {
-    let item = {
-      text: input,
-      completed: false,
-      id: crypto.randomUUID() 
-    };
-
-    let newTodos = [...todos, item];
-
-    setTodos(newTodos);
+    dispatch({ type: 'ADD_TODO', payload: input })
     setInput("");
   }
 
