@@ -1,17 +1,22 @@
 import "./App.css";
-import { useState, useReducer } from "react";
+import { useState } from "react";
 import TodoList from "./components/TodoList";
 
-import reducer from './reducer'
-
 export default function App() {
-
-  let [todos, dispatch] = useReducer(reducer, []);
+  let [todos, setTodos] = useState([]);
   let [input, setInput] = useState("");
   let [listType, setListType] = useState("all");
 
   function addToList() {
-    dispatch({ type: 'ADD_TODO', payload: input })
+    let item = {
+      text: input,
+      completed: false,
+      id: crypto.randomUUID() // 2188jd-293483-dfllkaksldf
+    };
+
+    let newTodos = [...todos, item];
+
+    setTodos(newTodos);
     setInput("");
   }
 
