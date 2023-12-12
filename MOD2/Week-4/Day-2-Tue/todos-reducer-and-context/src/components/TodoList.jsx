@@ -1,6 +1,10 @@
+import { useTodosContext } from "../todosContext";
 import Todo from "./Todo";
 
-function TodoList({ todos, listType, dispatch }) {
+function TodoList({ listType }) {
+
+  const { todos } = useTodosContext()
+
   let filteredTodos = todos.filter((item) => {
     if (listType === "all") {
       return true;
@@ -22,7 +26,6 @@ function TodoList({ todos, listType, dispatch }) {
         <Todo
           key={item.id}
           item={item}
-          dispatch={dispatch}
         />
       ))}
     </ul>

@@ -1,4 +1,9 @@
-function Todo({ item, dispatch }) {
+import { useTodosContext } from '../todosContext'
+
+function Todo({ item }) {
+
+  const { dispatch } = useTodosContext()
+
   return (
     <li style={{ listStyle: "none" }}>
       <input

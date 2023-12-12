@@ -1,12 +1,13 @@
 import "./App.css";
-import { useState, useReducer } from "react";
+import { useState } from "react";
 import TodoList from "./components/TodoList";
 
-import reducer from './reducer'
+import { useTodosContext } from "./todosContext";
 
 export default function App() {
 
-  let [todos, dispatch] = useReducer(reducer, []);
+  const { dispatch } = useTodosContext()
+
   let [input, setInput] = useState("");
   let [listType, setListType] = useState("all");
 
@@ -15,27 +16,25 @@ export default function App() {
   }
 
   return (
-    <div>
-      <h1>Todos ({listType})</h1>
 
-      <TodoList
-        todos={todos}
-        listType={listType}
-        dispatch={dispatch}
-      />
+      <div>
+        <h1>Todos ({listType})</h1>
 
-      <input value={input} onChange={handleChange} />
-      <button onClick={() => {
-            dispatch({ type: 'ADD_TODO', payload: input })
-            setInput("");
-      }}>Submit</button>
+        <TodoList listType={listType} />
 
-      <br />
-      <br />
+        <input value={input} onChange={handleChange} />
+        <button onClick={() => {
+              dispatch({ type: 'ADD_TODO', payload: input })
+              setInput("");
+        }}>Submit</button>
 
-      <button onClick={() => setListType("all")}>All</button>
-      <button onClick={() => setListType("complete")}>Completed</button>
-      <button onClick={() => setListType("incomplete")}>Incomplete</button>
-    </div>
+        <br />
+        <br />
+
+        <button onClick={() => setListType("all")}>All</button>
+        <button onClick={() => setListType("complete")}>Completed</button>
+        <button onClick={() => setListType("incomplete")}>Incomplete</button>
+      </div>
+
   );
 }
