@@ -1,26 +1,23 @@
 import "./App.css";
 import { useState } from "react";
 import TodoList from "./components/TodoList";
+
 import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+
+import { addTodo } from './todoSlice'
 
 
 export default function App() {
 
   const todos = useSelector((state) => state.todos)
+  const dispatch = useDispatch()
 
   const [input, setInput] = useState("");
   const [listType, setListType] = useState("all");
 
   function addToList() {
-    let item = {
-      text: input,
-      completed: false,
-      id: crypto.randomUUID() // 2188jd-293483-dfllkaksldf
-    };
-
-    let newTodos = [...todos, item];
-
-    setTodos(newTodos);
+    dispatch(addTodo(input))
     setInput("");
   }
 
