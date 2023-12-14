@@ -46,7 +46,6 @@ export default function App() {
       <h1>Todos ({listType})</h1>
 
       <TodoList
-        todos={todos}
         listType={listType}
         completeTodo={completeTodo}
         deleteTodo={deleteTodo}
