@@ -7,7 +7,7 @@ function Todo({ item }) {
   const dispatch = useDispatch()
 
   return (
-    <li style={{ listStyle: "none" }}>git a
+    <li style={{ listStyle: "none" }}>
       <input
         type="checkbox"
         checked={item.completed}
