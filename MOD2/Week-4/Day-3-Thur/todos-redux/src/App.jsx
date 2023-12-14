@@ -1,11 +1,15 @@
 import "./App.css";
 import { useState } from "react";
 import TodoList from "./components/TodoList";
+import { useSelector } from 'react-redux'
+
 
 export default function App() {
-  let [todos, setTodos] = useState([]);
-  let [input, setInput] = useState("");
-  let [listType, setListType] = useState("all");
+
+  const todos = useSelector((state) => state.todos)
+
+  const [input, setInput] = useState("");
+  const [listType, setListType] = useState("all");
 
   function addToList() {
     let item = {
