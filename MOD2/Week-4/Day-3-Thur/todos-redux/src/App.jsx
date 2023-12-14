@@ -25,18 +25,18 @@ export default function App() {
     setInput(event.target.value);
   }
 
-  function deleteTodo(id) {
-    let newTodos = todos.filter((item) => item.id !== id);
-    setTodos(newTodos);
-  }
+  // function deleteTodo(id) {
+  //   let newTodos = todos.filter((item) => item.id !== id);
+  //   setTodos(newTodos);
+  // }
 
-  function completeTodo(id) {
-    let newTodos = todos.map((item) =>
-      item.id === id ? { ...item, completed: !item.completed } : item
-    );
+  // function completeTodo(id) {
+  //   let newTodos = todos.map((item) =>
+  //     item.id === id ? { ...item, completed: !item.completed } : item
+  //   );
 
-    setTodos(newTodos);
-  }
+  //   setTodos(newTodos);
+  // }
 
   return (
     <div>
@@ -44,8 +44,6 @@ export default function App() {
 
       <TodoList
         listType={listType}
-        completeTodo={completeTodo}
-        deleteTodo={deleteTodo}
       />
 
       <input value={input} onChange={handleChange} />

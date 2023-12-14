@@ -1,13 +1,20 @@
-function Todo({ item, completeTodo, deleteTodo }) {
+import { useDispatch } from "react-redux";
+
+import { deleteTodo, completeTodo } from "../todoSlice";
+
+function Todo({ item }) {
+
+  const dispatch = useDispatch()
+
   return (
-    <li style={{ listStyle: "none" }}>
+    <li style={{ listStyle: "none" }}>git a
       <input
         type="checkbox"
         checked={item.completed}
-        onChange={() => completeTodo(item.id)}
+        onChange={() => dispatch(completeTodo(item.id))}
       />
       {item.text}
-      <button onClick={() => deleteTodo(item.id)}>x</button>
+      <button onClick={() => dispatch(deleteTodo(item.id))}>x</button>
     </li>
   );
 }
