@@ -1,47 +1,31 @@
-let colors = ['red', 'blue', 'green', 'orange']
-
-// Require modules
 const express = require('express');
-
-// Create the Express app
 const app = express();
+const PORT = 3000;
 
-const PORT = 3000
+const plants = ['Monstera Deliciosa', 'Corpse Flower', 'Elephant-Foot Yam',  "Witches' Butter",];
 
-// Configure the app (app.set)
+app.get('/awesome', (req, res) => { //this will never be reached
+    res.send(`
+      <h1>Plants are awesome!</h1>
+      <img src="https://static.boredpanda.com/blog/wp-content/uuuploads/plant-sculptures-mosaicultures-internationales-de-montreal/plant-sculptures-mosaicultures-internationales-de-montreal-14.jpg" >
+    `);
+  });
 
-
-// Mount middleware (app.use)
-
-
-// Mount routes
-app.get('/', function(req, res) {
-  	res.send('<h1>Hello Expresss!</h1>');
+app.get('/:indexOfPlantsArray', (req, res) => { //:indexOfPlantsArray can be anything, even awesome
+    res.send(plants[req.params.indexOfPlantsArray]);
 });
 
-app.get('/home', function(req, res) {
-    res.send('<h1>Home Page</h1>')
-})
+app.get('/hello/:firstname/:lastname', (req, res) => {
+	console.log(req.params);
+	res.send('hello ' + req.params.firstname + ' ' + req.params.lastname);
+});
 
-app.get('/:test', function(req, res) {
-    res.send('<h1>Test</h1>')
-})
+app.get('/howdy/:firstName', function(req, res) {
+    console.log('req.params: ', req.params);
+    console.log('req.query: ', req.query);
+    res.send('hello ' + req.query.title + ' ' + req.params.firstName);
+});
 
-app.get('/:test2', function(req, res) {
-    res.send('<h1>Test</h1>')
-})
-
-
-
-app.get('/colors/:indexOfColor', (req, res) => {
-    if (colors[req.params.indexOfColor]) {
-        res.send(colors[req.params.indexOfColor]);
-  } else {
-    res.send('cannot find anything at this index: ' + req.params.indexOfColor);
-  }
-})
-
-// Tell the app to listen on port 3000
-app.listen(PORT, function() {
- console.log(`Listening on port ${PORT}`);
+app.listen(PORT,() => {
+    console.log('listening on PORT' , PORT);
 });
