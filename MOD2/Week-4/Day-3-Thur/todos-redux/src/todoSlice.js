@@ -13,7 +13,7 @@ const todoSlice = createSlice({
             state.push(newTodo)
         },
         deleteTodo: (state, action) => {
-            console.log(state, action)
+        
             // OPTION 1: Mutate the state directly
             // let index = state.findIndex((todo) => todo.id === action.payload)
             // state.splice(index, 1)
