@@ -33,7 +33,7 @@ app.get('/fruits/new', (req, res) => {
 
 // "show" route
 app.get('/fruits/:index', (req, res) => {
-    res.render('Show', { fruit: fruits[req.params.index] })
+    res.render('Show', { fruit: fruits[req.params.index], index: req.params.index })
     // res.send(fruits[req.params.index])
 })
 
@@ -46,9 +46,14 @@ app.post('/fruits', (req, res) => {
         req.body.readyToEat = false
     }
     fruits.push(req.body)
-    console.log(fruits)
-    res.send('data received')
+    res.redirect('/fruits')
 })
+
+// "edit" route
+app.get('/fruits/:index/edit', (req, res) => {
+    res.render('Edit', { fruit: fruits[req.params.index] })
+})
+
 
 app.listen(PORT, () => {
     console.log('Listening on port: ' + PORT)
