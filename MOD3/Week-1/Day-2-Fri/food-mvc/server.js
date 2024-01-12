@@ -23,11 +23,17 @@ app.get('/fruits', (req, res) => {
     res.render('Index', { fruits: fruits })
 })
 
+// "new" route
+app.get('/fruits/new', (req, res) => {
+    res.render('New')
+})
+
 // "show" route
 app.get('/fruits/:index', (req, res) => {
     res.render('Show', { fruit: fruits[req.params.index] })
     // res.send(fruits[req.params.index])
 })
+
 
 app.listen(PORT, () => {
     console.log('Listening on port: ' + PORT)
