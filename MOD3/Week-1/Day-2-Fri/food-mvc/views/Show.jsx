@@ -10,7 +10,7 @@ export default function Show({ fruit, index }) {
             <br /><br />
             <a href={`/fruits/${index}/edit`}>Edit</a>
             <br /><br />
-            <form action={`/fruits/${index}`} method='DELETE'>
+            <form action={`/fruits/${index}?_method=DELETE`} method='POST'>
                 <button>Delete</button>
             </form>
         </div>

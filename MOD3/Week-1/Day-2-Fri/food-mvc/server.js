@@ -58,8 +58,9 @@ app.get('/fruits/:index/edit', (req, res) => {
 
 // "destroy" route
 app.delete('/fruits/:index', (req, res) => {
-    console.log('deleted')
-    res.send('deleted')
+    fruits.splice(req.params.index, 1)
+    console.log('deleting')
+    res.redirect('/fruits')
 })
 
 
