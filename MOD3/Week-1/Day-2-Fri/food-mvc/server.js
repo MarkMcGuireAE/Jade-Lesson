@@ -53,7 +53,7 @@ app.post('/fruits', (req, res) => {
 
 // "edit" route
 app.get('/fruits/:index/edit', (req, res) => {
-    res.render('Edit', { fruit: fruits[req.params.index] })
+    res.render('Edit', { fruit: fruits[req.params.index], index: req.params.index })
 })
 
 // "destroy" route
@@ -61,6 +61,18 @@ app.delete('/fruits/:index', (req, res) => {
     fruits.splice(req.params.index, 1)
     console.log('deleting')
     res.redirect('/fruits')
+})
+
+// "update" route
+app.put('/fruits/:index', (req, res) => {
+    console.log('update')
+    if (req.body.readyToEat === 'on') {
+        req.body.readyToEat = true
+    } else {
+        req.body.readyToEat = false
+    }
+    fruits[req.params.index] = req.body
+    res.redirect(`/fruits/${req.params.index}`)
 })
 
 
