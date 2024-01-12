@@ -1,27 +1,21 @@
-const express = require('express')
+const fruits = require('../models/fruits')
 
-const router = express.Router()
-
-// const fruits = require('../models/fruits')
-
-// "index" route
-router.get('/', (req, res) => {
+const fruitIndex = (req, res) => {
     res.render('Index', { fruits: fruits })
-})
+}
 
-// "new" route
-router.get('/new', (req, res) => {
+const fruitNew = (req, res) => {
     res.render('New')
-})
+}
 
 // "show" route
-router.get('/:index', (req, res) => {
+const fruitShow = (req, res) => {
     res.render('Show', { fruit: fruits[req.params.index], index: req.params.index })
     // res.send(fruits[req.params.index])
-})
+}
 
 // "create" route
-router.post('/', (req, res) => {
+const fruitCreate = (req, res) => {
     console.log(req.body)
     if (req.body.readyToEat === 'on') {
         req.body.readyToEat = true
@@ -30,22 +24,22 @@ router.post('/', (req, res) => {
     }
     fruits.push(req.body)
     res.redirect('/fruits')
-})
+}
 
 // "edit" route
-router.get('/:index/edit', (req, res) => {
+const fruitEdit = (req, res) => {
     res.render('Edit', { fruit: fruits[req.params.index], index: req.params.index })
-})
+}
 
 // "destroy" route
-router.delete('/:index', (req, res) => {
+const fruitDelete = (req, res) => {
     fruits.splice(req.params.index, 1)
     console.log('deleting')
     res.redirect('/fruits')
-})
+}
 
 // "update" route
-router.put('/:index', (req, res) => {
+const fruitUpdate = (req, res) => {
     console.log('update')
     if (req.body.readyToEat === 'on') {
         req.body.readyToEat = true
@@ -54,6 +48,14 @@ router.put('/:index', (req, res) => {
     }
     fruits[req.params.index] = req.body
     res.redirect(`/fruits/${req.params.index}`)
-})
+}
 
-module.exports = router
+module.exports = {
+    fruitCreate,
+    fruitDelete,
+    fruitEdit,
+    fruitIndex,
+    fruitNew,
+    fruitShow,
+    fruitUpdate
+}
