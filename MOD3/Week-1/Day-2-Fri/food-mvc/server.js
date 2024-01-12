@@ -1,4 +1,5 @@
 const express = require('express')
+const methodOverride = require('method-override')
 
 const app = express()
 
@@ -11,6 +12,7 @@ const jsxEngine = require('jsx-view-engine')
 
 // format our POST request data 
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method'))
 
 // setup our engine
 app.set('view engine', 'jsx');
@@ -52,6 +54,12 @@ app.post('/fruits', (req, res) => {
 // "edit" route
 app.get('/fruits/:index/edit', (req, res) => {
     res.render('Edit', { fruit: fruits[req.params.index] })
+})
+
+// "destroy" route
+app.delete('/fruits/:index', (req, res) => {
+    console.log('deleted')
+    res.send('deleted')
 })
 
 

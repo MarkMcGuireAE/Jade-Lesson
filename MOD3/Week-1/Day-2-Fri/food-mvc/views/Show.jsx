@@ -9,6 +9,10 @@ export default function Show({ fruit, index }) {
             {fruit.readyToEat ? 'Its is ready to eat' : 'It is not ready to eat... Cant touch this' }
             <br /><br />
             <a href={`/fruits/${index}/edit`}>Edit</a>
+            <br /><br />
+            <form action={`/fruits/${index}`} method='DELETE'>
+                <button>Delete</button>
+            </form>
         </div>
     )
 }
