@@ -2,6 +2,8 @@ const express = require('express')
 
 const router = express.Router()
 
+const fruits = require('./models/fruits')
+
 // "index" route
 router.get('/fruits', (req, res) => {
     res.render('Index', { fruits: fruits })
