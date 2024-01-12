@@ -9,6 +9,9 @@ const PORT = 5000
 // load our engine
 const jsxEngine = require('jsx-view-engine')
 
+// format our POST request data 
+app.use(express.urlencoded({ extended: true }));
+
 // setup our engine
 app.set('view engine', 'jsx');
 app.engine('jsx', jsxEngine());
@@ -34,6 +37,18 @@ app.get('/fruits/:index', (req, res) => {
     // res.send(fruits[req.params.index])
 })
 
+// "create" route
+app.post('/fruits', (req, res) => {
+    console.log(req.body)
+    if (req.body.readyToEat === 'on') {
+        req.body.readyToEat = true
+    } else {
+        req.body.readyToEat = false
+    }
+    fruits.push(req.body)
+    console.log(fruits)
+    res.send('data received')
+})
 
 app.listen(PORT, () => {
     console.log('Listening on port: ' + PORT)

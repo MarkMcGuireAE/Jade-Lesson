@@ -6,13 +6,14 @@ export default function New() {
       <h1>New Page</h1>
       <form action="/fruits" method="POST">
         Name: <input type="text" name="name" />
-        <br />
+        <br /><br />
         Color: <input type="text" name="color" />
-        <br />
+        <br /><br />
         Is Ready To Eat: <input type="checkbox" name="readyToEat" />
-        <br />
-        <input type="submit" name="" value="Create Fruit" />
+        <br /><br />
+        <button>Create Fruit</button>
       </form>
     </div>
   );
 }
+
