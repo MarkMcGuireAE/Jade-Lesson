@@ -6,6 +6,11 @@ const fruits = require('./models/fruits')
 
 const PORT = 5000
 
+const jsxEngine = require('jsx-view-engine')
+
+app.set('view engine', 'jsx');
+app.engine('jsx', jsxEngine());
+
 // "root" route
 app.get('/', (req, res) => {
     res.send('Hello World!')
