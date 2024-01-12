@@ -25,7 +25,7 @@ app.get('/fruits', (req, res) => {
 
 // "show" route
 app.get('/fruits/:index', (req, res) => {
-    res.render('Show')
+    res.render('Show', { fruit: fruits[req.params.index] })
     // res.send(fruits[req.params.index])
 })
 
