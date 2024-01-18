@@ -1,5 +1,5 @@
 const Post = require('../models/postModel')
-const Comment = require('../models/commentModal')
+const Comment = require('../models/commentModel')
 
 module.exports.create = async (req, res) => {
     try {
@@ -54,6 +54,8 @@ module.exports.index = async (req, res) => {
 module.exports.edit = async (req, res) => {
     try {
         // find the post and filter it's comments property array
+        const comment = await Comment.findById(req.params.commentId)
+        res.render('comments/Edit', { postId: req.params.postId, comment: comment })
     } catch(err) {
         console.log(err.message)
         res.redirect(`/posts/${req.params.postId}`)
@@ -63,7 +65,7 @@ module.exports.edit = async (req, res) => {
 module.exports.update = async (req, res) => {
     try {
         // update a comment by updating an item in the comments property in post
-        
+        await Comment.findByIdAndUpdate(req.params.commentId, req.body)
     } catch(err) {
         console.log(err.message)
     }

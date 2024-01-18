@@ -1,14 +1,16 @@
 const Posts = require('../models/postModel')
+const Comment = require('../models/commentModel')
 const posts = require('../models/posts')
 
 module.exports.seed = async (req, res) => {
     await Posts.deleteMany({})
+    await Comment.deleteMany({})
     await Posts.create(posts)
     res.redirect('/posts')
 }
 
 module.exports.index = async (req, res) => {
-    const posts = await Posts.find().sort({ createdAt: 1 })
+    const posts = await Posts.find().sort({ createdAt: -1 })
     res.render('posts/Index', { posts })
 }
 
