@@ -46,8 +46,23 @@ module.exports.new = async (req, res) => {
 }
 
 module.exports.delete = async (req, res) => {
-    await Posts.findByIdAndDelete(req.params.id)
-    
+    try {
+        // find the post, delete it from database, but store it in memory (post variable)
+        const post = await Posts.findByIdAndDelete(req.params.id)
+
+        // deleting all comments where the id...
+        await Comment.deleteMany({
+            // ...matches any comment ids...
+            _id: {
+                // ...in the given array
+                $in: post.comments
+            }
+        })
+
+    } catch(err) {
+        console.log(err.message)
+    }
+
     res.redirect('/posts')
 }
 
