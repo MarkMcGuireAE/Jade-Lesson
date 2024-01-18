@@ -2,23 +2,43 @@ const Post = require('../models/postModel')
 
 module.exports.create = async (req, res) => {
     // create a comment by updating the comments property in post
-    await Post.findByIdAndUpdate(req.params.postId, {
-        // push the req.body to the comments property of a particular post
-        $push: {
-            comments: req.body
-        }
-    })
+    try {
+        await Post.findByIdAndUpdate(req.params.postId, {
+            // push the req.body to the comments property of a particular post
+            $push: {
+                comments: req.body
+            }
+        })
+    } catch(err) {
+        console.log(err.message)
+    }
     res.redirect(`/posts/${req.params.postId}`)
 }
 
 module.exports.delete = async (req, res) => {
-    // delete a comment by updating the comments property in post
+    try {
+        // delete a comment by updating the comments property in post
+        await Post.findByIdAndUpdate(req.params.postId, {
+            // remove (or pull out) a subdocument...
+            $pull: {
+                // ...from the comments array...
+                comments: {
+                    // ...with a matching id
+                    _id: req.params.commentId
+                }
+            }
+        })
+    } catch(err) {
+        console.log(err.message)
+    }
+
     res.redirect(`/posts/${req.params.postId}`)
 }
 
 module.exports.index = async (req, res) => {
     // target the comments property 
-    res.send('')
+    const post = await Post.findById(req.params.postId)
+    res.send(post.comments)
 }
 
 module.exports.show = async (req, res) => {
