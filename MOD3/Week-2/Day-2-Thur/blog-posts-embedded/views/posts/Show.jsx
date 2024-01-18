@@ -17,7 +17,7 @@ function Show(props) {
                             <p>{props.post.comments.map((comment, i) => 
                                 <div key={i} className="comm">
                                     <div>{comment.user}</div>
-                                    <div>{comment.body}</div>
+                                    <div>{comment.text}</div>
                                     <form action={`/comments/${props.post._id}/${comment._id}?_method=DELETE`} method="POST"><input type="submit" value="X"/></form>
                                     <a href={`/comments/${props.post._id}/${comment._id}`}>+</a>
                                 </div>
@@ -26,10 +26,11 @@ function Show(props) {
                         </>
                         : ''
                     }
+
                     <details>
                         <summary style={{ opacity: '.5' }}>Leave a comment:</summary>
                         <form action={`/comments/${props.post._id}`} method="POST">
-                            <textarea name="body" id="lc" cols="1" rows="1" />
+                            <textarea name="text" id="lc" cols="1" rows="1" />
                             <button>Comment</button>
                         </form>
                     </details>
