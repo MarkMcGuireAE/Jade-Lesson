@@ -1,6 +1,18 @@
+const Post = require('../models/postModel')
+const Comment = require('../models/commentModal')
+
 module.exports.create = async (req, res) => {
     try {
         // create a comment by updating the comments property in post
+        const comment = await Comment.create(req.body)
+        // find the post...
+        await Post.findByIdAndUpdate(req.params.postId, {
+            // ...push the new comment's document id...
+            $push: {
+                // ...into the comments array
+                comments: comment._id
+            }
+        })
 
     } catch(err) {
         console.log(err.message)
