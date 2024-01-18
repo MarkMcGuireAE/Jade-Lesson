@@ -3,7 +3,17 @@ const posts = [
         subject: 'Once upon a time...',
         body: 'The end.',
         user: 'Bob',
-        comments: []
+        comments: [
+            {
+                text: 'abc 123'
+            },
+            {
+                text: 'apples'
+            },
+            {
+                text: 'oranges'
+            }
+        ]
     },
     {
         subject: 'To be or not to be',

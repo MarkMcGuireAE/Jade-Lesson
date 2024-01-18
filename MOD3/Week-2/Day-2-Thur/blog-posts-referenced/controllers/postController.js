@@ -3,9 +3,36 @@ const Comment = require('../models/commentModel')
 const posts = require('../models/posts')
 
 module.exports.seed = async (req, res) => {
-    await Posts.deleteMany({})
-    await Comment.deleteMany({})
-    await Posts.create(posts)
+    try {
+        await Posts.deleteMany({})
+        await Comment.deleteMany({})
+
+        for (let post of posts) {
+
+            let comments = post.comments
+            post.comments = []
+
+            console.log(comments)
+
+            const seededComments = await Comment.insertMany(comments);
+console.log(seededComments)
+            const commentIds = seededComments.map(comment => comment._id);
+            post.comments = commentIds
+
+            await Posts.create(post)
+            // for (let comment of comments) {
+            //     const commentDoc = await Comment.create(comment)
+            //     await Posts.findByIdAndUpdate(postDoc._id, {
+            //         $push: {
+            //             comments: commentDoc._id
+            //         }
+            //     })
+            // }
+        }
+
+    } catch(err) {
+        console.log(err)
+    }
     res.redirect('/posts')
 }
 
@@ -20,6 +47,7 @@ module.exports.new = async (req, res) => {
 
 module.exports.delete = async (req, res) => {
     await Posts.findByIdAndDelete(req.params.id)
+    
     res.redirect('/posts')
 }
 
