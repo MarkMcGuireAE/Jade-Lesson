@@ -9,7 +9,7 @@ function Edit(props) {
                 <form action={`/comments/${props.postId}/${props.comment._id}?_method=PUT`} method="POST">
 
                     <label htmlFor="clr">Body:</label><br />
-                    <textarea name="body" id="clr" cols="30" rows="10" defaultValue={props.comment.body} /><br /><br />
+                    <textarea name="body" id="clr" cols="30" rows="10" defaultValue={props.comment.text} /><br /><br />
 
                     <button>Submit</button>
                 </form>

@@ -43,6 +43,9 @@ module.exports.index = async (req, res) => {
 
 module.exports.show = async (req, res) => {
     // find the post and filter it's comments property array
+    const post = await Post.findById(req.params.postId)
+    const comment = post.comments.find(comment => comment._id == req.params.commentId)
+    console.log(comment)
     res.render('comments/Edit', { postId: req.params.postId, comment })
 }
 
