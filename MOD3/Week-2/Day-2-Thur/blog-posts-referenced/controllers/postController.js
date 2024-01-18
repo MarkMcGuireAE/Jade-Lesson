@@ -44,7 +44,7 @@ module.exports.edit = async (req, res) => {
 }
 
 module.exports.show = async (req, res) => {
-    const post = await Posts.findById(req.params.id)
+    const post = await Posts.findById(req.params.id).populate('comments')
     console.log(post)
     res.render('posts/Show', { post })
 }
