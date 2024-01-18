@@ -61,5 +61,14 @@ module.exports.edit = async (req, res) => {
 
 module.exports.update = async (req, res) => {
     // update a comment by updating an item in the comments property in post
+    try {
+        const post = await Post.findById(req.params.postId)
+        const comment = post.comments.find(comment => comment._id == req.params.commentId)
+        comment.text = req.body.text
+        await post.save()
+    } catch(err) {
+        console.log(err.message)
+    }
+
     res.redirect(`/posts/${req.params.postId}`)
 }
