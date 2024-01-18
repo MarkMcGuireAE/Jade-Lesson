@@ -16,8 +16,8 @@ router.put('/:postId/:commentId', commentControl.update)
 // create
 router.post('/:postId', commentControl.create)
 
-// show
-router.get('/:postId/:commentId', commentControl.show)
+// edit 
+router.get('/:postId/:commentId', commentControl.edit)
 
 
 module.exports = router

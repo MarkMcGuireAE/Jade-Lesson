@@ -37,16 +37,26 @@ module.exports.delete = async (req, res) => {
 
 module.exports.index = async (req, res) => {
     // target the comments property 
-    const post = await Post.findById(req.params.postId)
-    res.send(post.comments)
+    try {
+        const post = await Post.findById(req.params.postId)
+        res.send(post.comments)
+    } catch(err) {
+        console.log(err.message)
+        res.redirect('/posts')
+    }
 }
 
-module.exports.show = async (req, res) => {
+module.exports.edit = async (req, res) => {
     // find the post and filter it's comments property array
-    const post = await Post.findById(req.params.postId)
-    const comment = post.comments.find(comment => comment._id == req.params.commentId)
-    console.log(comment)
-    res.render('comments/Edit', { postId: req.params.postId, comment })
+    try {
+        const post = await Post.findById(req.params.postId)
+        const comment = post.comments.find(comment => comment._id == req.params.commentId)
+        console.log(comment)
+        res.render('comments/Edit', { postId: req.params.postId, comment })
+    } catch(err) {
+        console.log(err.message)
+        res.redirect('/posts')
+    }
 }
 
 module.exports.update = async (req, res) => {
