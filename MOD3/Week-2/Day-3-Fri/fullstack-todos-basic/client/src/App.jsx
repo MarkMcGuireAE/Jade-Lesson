@@ -11,9 +11,10 @@ export default function App() {
 
     const getData = async () => {
       try {
-        const response = await fetch('/api/test')
+        const response = await fetch('/api/todos')
         const data = await response.json()
         console.log(data)
+        setTodos(data)
       } catch(err) {
         console.error(err)
       }
@@ -23,16 +24,26 @@ export default function App() {
 
   }, [])
 
-  function addToList() {
-    let item = {
-      text: input,
-      completed: false,
-      id: crypto.randomUUID() // 2188jd-293483-dfllkaksldf
+  async function addToList() {
+    let todo = {
+      text: input
     };
 
-    let newTodos = [...todos, item];
+    console.log(JSON.stringify(todo))
 
-    setTodos(newTodos);
+    const response = await fetch('/api/todos', {
+      method: 'POST',
+      body: JSON.stringify(todo),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+    const newTodo = await response.json()
+
+    console.log(newTodo)
+
+    setTodos([...todos, newTodo]);
     setInput("");
   }
 
@@ -40,9 +51,21 @@ export default function App() {
     setInput(event.target.value);
   }
 
-  function deleteTodo(id) {
-    let newTodos = todos.filter((item) => item.id !== id);
-    setTodos(newTodos);
+  async function deleteTodo(id) {
+
+    try {
+
+      await fetch(`/api/todos/${id}`, {
+        method: 'DELETE'
+      })
+
+      let newTodos = todos.filter((todo) => todo._id !== id);
+      setTodos(newTodos);
+
+    } catch(err) {
+      console.log(err)
+    }
+    
   }
 
   function completeTodo(id) {
