@@ -2,6 +2,8 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import TodoList from "./components/TodoList";
 
+import axios from 'axios'
+
 export default function App() {
   let [todos, setTodos] = useState([]);
   let [input, setInput] = useState("");
@@ -11,10 +13,14 @@ export default function App() {
 
     const getData = async () => {
       try {
-        const response = await fetch('/api/todos')
-        const data = await response.json()
-        console.log(data)
-        setTodos(data)
+        // OPTION 1: use fetch for "index" route
+        // const response = await fetch('/api/todos')
+        // const data = await response.json()
+
+        // OPTION 2: use axios
+        const response = await axios.get('/api/todos')
+        console.log(response)
+        setTodos(response.data)
       } catch(err) {
         console.error(err)
       }
@@ -31,21 +37,23 @@ export default function App() {
         text: input
       };
   
-      console.log(JSON.stringify(todo))
+      // OPTION 1: use fetch for "create" route
+
+      // const response = await fetch('/api/todos', {
+      //   method: 'POST',
+      //   body: JSON.stringify(todo),
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   }
+      // })
   
-      const response = await fetch('/api/todos', {
-        method: 'POST',
-        body: JSON.stringify(todo),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-  
-      const newTodo = await response.json()
-  
-      console.log(newTodo)
-  
-      setTodos([...todos, newTodo]);
+      // const newTodo = await response.json()
+
+      // OPTION 2: use axios
+
+      const response = await axios.post('/api/todos', todo)
+
+      setTodos([...todos, response.data]);
       setInput("");
 
     } catch(err) {
@@ -61,9 +69,15 @@ export default function App() {
 
     try {
 
-      await fetch(`/api/todos/${id}`, {
-        method: 'DELETE'
-      })
+       // OPTION 1: use fetch for "delete" route
+
+      // await fetch(`/api/todos/${id}`, {
+      //   method: 'DELETE'
+      // })
+
+       // OPTION 2: use axios
+
+       await axios.delete(`/api/todos/${id}`)
 
       let newTodos = todos.filter((todo) => todo._id !== id);
       setTodos(newTodos);
@@ -82,13 +96,19 @@ export default function App() {
       let todo = newTodos.find(t => t._id === id)
       todo.completed = !todo.completed
     
-      await fetch(`/api/todos/${id}`, {
-        method: 'PUT',
-        body: JSON.stringify(todo),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
+        // OPTION 1: use fetch for "update" route
+
+      // await fetch(`/api/todos/${id}`, {
+      //   method: 'PUT',
+      //   body: JSON.stringify(todo),
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   }
+      // })
+
+      // OPTION 2: use axios
+
+      await axios.put(`/api/todos/${id}`, todo)
 
       setTodos(newTodos);
       
