@@ -12,7 +12,8 @@ export default function App() {
     const getData = async () => {
       try {
         const response = await fetch('/api/test')
-        console.log(response)
+        const data = await response.json()
+        console.log(data)
       } catch(err) {
         console.error(err)
       }
