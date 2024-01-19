@@ -1,5 +1,9 @@
+require('dotenv').config()
+
 const express = require('express')
 const cors = require('cors')
+
+const mongoConfig = require('./config')
 
 const app = express()
 
@@ -14,6 +18,7 @@ app.get('/api/test', (req, res) => {
 
 app.listen(PORT, () => {
     console.log(`Listening on port: ${PORT}`)
+    mongoConfig()
 })
 
 
