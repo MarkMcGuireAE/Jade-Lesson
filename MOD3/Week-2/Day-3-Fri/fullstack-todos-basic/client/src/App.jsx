@@ -25,26 +25,32 @@ export default function App() {
   }, [])
 
   async function addToList() {
-    let todo = {
-      text: input
-    };
+    try {
 
-    console.log(JSON.stringify(todo))
+      let todo = {
+        text: input
+      };
+  
+      console.log(JSON.stringify(todo))
+  
+      const response = await fetch('/api/todos', {
+        method: 'POST',
+        body: JSON.stringify(todo),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+  
+      const newTodo = await response.json()
+  
+      console.log(newTodo)
+  
+      setTodos([...todos, newTodo]);
+      setInput("");
 
-    const response = await fetch('/api/todos', {
-      method: 'POST',
-      body: JSON.stringify(todo),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-
-    const newTodo = await response.json()
-
-    console.log(newTodo)
-
-    setTodos([...todos, newTodo]);
-    setInput("");
+    } catch(err) {
+      console.log(err)
+    }
   }
 
   function handleChange(event) {
@@ -68,11 +74,27 @@ export default function App() {
     
   }
 
-  function completeTodo(id) {
-    let newTodos = todos.map((item) =>
-      item.id === id ? { ...item, completed: !item.completed } : item
-    );
-    setTodos(newTodos);
+  async function completeTodo(id) {
+
+    try {
+
+      let newTodos = [...todos]
+      let todo = newTodos.find(t => t._id === id)
+      todo.completed = !todo.completed
+    
+      await fetch(`/api/todos/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(todo),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+
+      setTodos(newTodos);
+      
+    } catch(err) {
+      console.log(err)
+    }
   }
 
   return (

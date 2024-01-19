@@ -55,6 +55,18 @@ app.delete('/api/todos/:id', async (req, res) => {
     }
 })
 
+// "update" route
+app.put('/api/todos/:id', async (req, res) => {
+    try {
+        console.log('PUT /api/todos/:id')
+        await Todo.findByIdAndUpdate(req.params.id, req.body)
+        res.status(200).json({ message: 'successfully updated' })
+    } catch(err) {
+        console.log(err.message)
+        res.status(400).json(err)
+    }
+})
+
 app.listen(PORT, () => {
     console.log(`Listening on port: ${PORT}`)
     mongoConfig()
