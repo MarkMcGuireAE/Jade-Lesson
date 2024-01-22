@@ -17,12 +17,34 @@ function App() {
 
     const [user, setUser] = useState({})
 
+    async function getUser(token) {
+        try {
+            const response = await axios.get('/api/users', {
+                headers: {
+                    Authorization: token
+                }
+            })
+            setUser(response.data)
+        } catch(err) {
+            console.log(err)
+            localStorage.removeItem("token")
+        }
+    }
+
     useEffect(() => {
+
+        const token = localStorage.getItem("token")
+
+        if (token) {
+            // get user info
+            getUser(token)
+        }
+
     }, [])
 
     return ( 
         <div className="app">
-            <Navbar username={null} setUser={setUser} />
+            <Navbar username={user.username} setUser={setUser} />
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/profile" element={<Profile username={user.username} email={user.email} />} />
