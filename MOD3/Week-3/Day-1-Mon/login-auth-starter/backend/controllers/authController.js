@@ -2,8 +2,13 @@ const User = require('../models/User')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
-async function register(req, res) {
+function generateToken(newUser) {
+    const payload = { id: newUser._id, username: newUser.username }
+    return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: 30 })
+}
 
+async function register(req, res) {
+    console.log('REGISTER /auth/register')
     try {
         // 1. Check if the user exists 
 
@@ -29,8 +34,7 @@ async function register(req, res) {
 
         // 4. Generate a JWT token (the keys... permission slip... wrist band) and returning it to the user 
             
-        const payload = { id: newUser._id, username: newUser.username }
-        const token = jwt.sign(payload, 'super secret string', { expiresIn: 30 })
+        const token = generateToken(newUser)
 
         console.log(token)
 
@@ -44,6 +48,34 @@ async function register(req, res) {
 }
 
 async function login(req, res) {
+    console.log('LOGIN /auth/login')
+    try {
+        // 1. Check if user exists
+
+        const foundUser = await User.findOne({ username: req.body.username })
+
+        if (!foundUser) {
+            return res.status(400).json({ error: 'No such user exists' }) 
+        }
+
+        // 2. Check if the password provided by user matches the one in the database
+
+        const validPass = await bcrypt.compare(req.body.password, foundUser.password)
+
+        if (!validPass) {
+            return res.status(400).json({ error: 'Invalid credentials' })
+        }
+
+        // 3. Generate a JWT token and return it to the user
+
+        const token = generateToken(foundUser)
+        
+        res.status(200).json({ token })
+
+    } catch(err) {
+        console.log(err.message)
+        res.status(400).json({ error: err.message })
+    }
 }
 
 module.exports = {
