@@ -20,6 +20,19 @@ function Register({ setUser }) {
     }
 
     const handleSubmit = async (e) => {
+        e.preventDefault()
+        try {
+
+            const response = await axios.post('/auth/register', form)
+            const token = response.data.token
+
+            console.log(token)
+
+            if (!token) {}
+
+        } catch(err) {
+            console.log(err)
+        }
     }
 
     return ( 
