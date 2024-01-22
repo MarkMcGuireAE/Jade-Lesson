@@ -28,10 +28,26 @@ function Register({ setUser }) {
 
             console.log(token)
 
-            if (!token) {}
+            if (!token) {
+                setForm(emptyForm)
+                return
+            } 
+
+            localStorage.setItem("token", token)
+
+            const userResponse = await axios.get('/api/users', { 
+                headers: {
+                    Authorization: token
+                }
+            })
+
+            setUser(userResponse.data)
+    
+            navigate('/profile')
 
         } catch(err) {
-            console.log(err)
+            console.log(err.response.data.error)
+            alert(err.response.data.error)
         }
     }
 

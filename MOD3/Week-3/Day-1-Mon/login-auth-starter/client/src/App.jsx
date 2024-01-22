@@ -25,7 +25,7 @@ function App() {
             <Navbar username={null} setUser={setUser} />
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/profile" element={<Profile username={null} email={null} />} />
+                <Route path="/profile" element={<Profile username={user.username} email={user.email} />} />
                 <Route path="/login" element={<Login setUser={setUser} />} />
                 <Route path="/register" element={<Register setUser={setUser} />} />
             </Routes>
