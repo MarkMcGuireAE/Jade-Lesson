@@ -7,7 +7,7 @@ function authorize(req, res, next) {
 
         // 1. Check if the request has a token (in the Authorization header)
 
-        const token = req.header("Authorization")
+        let token = req.header("Authorization")
 
         if (!token) {
             return res.status(400).json({ error: 'No token provided' })
